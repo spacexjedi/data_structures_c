@@ -13,25 +13,25 @@ typedef struct  {
 // Create list
 Array* create_array();
 // Initialize list
-void init_array(Array *v, int element, int num_elements);
+void init_array(Array *a, int element, int num_elements);
 // Add more space
-void increase_array(Array *v, int size);
+void increase_array(Array *a, int size);
 // Add element to the end of the array
-void push_array (Array* v, int element);
+void push_array (Array* a, int element);
 // Print array
-void print_array(Array* v);
+void print_array(Array* a);
 // Sort array asc
-void sort_asc_array(Array *v);
+void sort_asc_array(Array *a);
 // Sort array des
-void sort_desc_array(Array *v);
+void sort_desc_array(Array *a);
 // update ?
-void update_array(Array *v, int pos, int element);
+void update_array(Array *a, int pos, int element);
 // Insert element
-void insert_element(Array *v, int pos, int valor);
+void insert_element(Array *a, int pos, int element);
 // Remove element
-void remove_element(Array *v, int pos, int element);
+void remove_element(Array *a, int pos, int element);
 // Search an element
-int search_element(Array *v, int element);
+int search_element(Array *a, int element);
 
 
 /**************************************************/
@@ -133,19 +133,113 @@ void print_array(Array* a) {
 }
 
 // Sort array asc
-void sort_asc_array(Array *v);
+void sort_asc_array(Array *a){
+  int i, j, k = 0;
+  for(i = 0; i < a->size; ++i) {
+    for(j = 0; j < a->size; ++i){
+      if(a->arr[i] < a->arr[j]) {
+        k = a->arr[i];
+        a->arr[i] = a->arr[j];
+        a->arr[j] = k;
+      }
+    }
+  }
+
+}
 
 // Sort array des
-void sort_desc_array(Array *v);
+void sort_desc_array(Array *a) {
+   int i, j, k = 0;
+  for(i = 0; i < a->size; ++i) {
+    for(j = 0; j < a->size; ++i){
+      if(a->arr[i] > a->arr[j]) {
+        k = a->arr[i];
+        a->arr[i] = a->arr[j];
+        a->arr[j] = k;
+      }
+    }
+  }
+}
 
 // update ?
-void update_array(Array *v, int pos, int element);
+void update_array(Array *a, int pos, int element) {
+  if(a->size != 0 && pos <= a->size && pos > 0)
+		a->arr[pos-1] = element;
+}
 
 // Insert element
-void insert_element(Array *v, int pos, int valor);
+void insert_element(Array *a, int pos, int element) {
+
+  if(pos <= a->size || a->size != 0){
+		int s = a->size, i, j, k = 0;
+		int A[s-1], AA[s];
+
+		for(i = 0; i < s; ++i){
+			AA[i] = a->arr[i];
+		}
+
+		for(i = 0, j = 0; i < s; ++i){
+			if(i == (pos-1) && a->arr[i] == element)
+				++k;
+			else{
+				A[j] = a->arr[i];
+				++j;
+			}
+		}
+		if(k == 1){
+			increase_array(a, s-2);
+			for(i = 0; i < a->size; ++i){
+				*(a->arr) = A[i];
+				++(a->arr);
+			}
+
+			(a->arr) -= i;
+			a->num_elements = i;
+		}
+
+	}
+
+}
 
 // Remove element
-void remove_element(Array *v, int pos, int element);
+void remove_element(Array *a, int pos, int element) {
+
+  if(pos <= a->size || a->size != 0){
+		int s = a->size, i, j, k = 0;
+		int A[s-1], AA[s];
+
+		for(i = 0; i < s; ++i){
+			AA[i] = a->arr[i];
+		}
+
+		for(i = 0, j = 0; i < s; ++i){
+			if(i == (pos-1) && a->arr[i] == element)
+				++k;
+			else{
+				A[j] = a->arr[i];
+				++j;
+			}
+		}
+		if(k == 1){
+			increase_array(a, s-2);
+			for(i = 0; i < a->size; ++i){
+				*(a->arr) = A[i];
+				++(a->arr);
+			}
+
+			(a->arr) -= i;
+			a->num_elements = i;
+		}
+
+	}
+}
 
 // Search an element
-int search_element(Array *v, int element);
+int search_element(Array *a, int element) {
+  int i, j, k = 0;
+  for(i = 0; i < a->size; ++i) {
+    if(a->arr[i] == element)
+      return i;
+  } 
+  return -1;
+}
